@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>
+    if (localStorage.getItem('modoOscuro') === 'true') {
+      document.documentElement.classList.add('dark-mode');
+    }
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Notificaciones</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>EcoRuta Neiva</h1>
+    <nav>
+      <a href="ruta.html">Ruta</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="reportar.html">Reportar</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="puntos.html">Puntos</a>
+      <a href="configura.html">Configuración</a>
+    </nav>
+  </header>
+
+  <main class="notificaciones-container">
+    <h2>Notificaciones</h2>
+    <ul class="notificaciones-lista">
+      <li class="notificacion verde">
+        📢 El camión de reciclaje llegará 30 minutos más tarde hoy.
+        <small>02 de junio, 2025 - 7:30 a.m.</small>
+      </li>
+      <li class="notificacion naranja">
+        🚧 Punto ecológico del barrio Venecia en mantenimiento.
+        <small>01 de junio, 2025 - 4:00 p.m.</small>
+      </li>
+      <li class="notificacion azul">
+        ✅ Tu reporte fue recibido. ¡Gracias por ayudar a tu ciudad!
+        <small>30 de mayo, 2025 - 9:45 a.m.</small>
+      </li>
+    </ul>
+  </main>
+
+  <footer>&copy; 2025 EcoRuta</footer>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script>
+    // Aplica el modo oscuro automáticamente si está activado en localStorage
+    if (localStorage.getItem('modoOscuro') === 'true') {
+      document.documentElement.classList.add('dark-mode');
+    }
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Ranking de Barrios</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>EcoRuta Neiva</h1>
+    <nav>
+      <a href="ruta.html">Ruta</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="reportar.html">Reportar</a>
+      <a href="notificaciones.html">Notificaciones</a>
+      <a href="puntos.html">Puntos</a>
+      <a href="configura.html">Configuración</a>
+    </nav>
+  </header>
+
+  <main class="ranking-container">
+    <h2>Ranking de Barrios Limpios</h2>
+    <ul class="ranking-list">
+      <li class="ranking-item oro">
+        <span>1. El Jardín</span>
+        <span>98 pts</span>
+      </li>
+      <li class="ranking-item plata">
+        <span>2. Santa Inés</span>
+        <span>92 pts</span>
+      </li>
+      <li class="ranking-item bronce">
+        <span>3. Cándido</span>
+        <span>90 pts</span>
+      </li>
+      <li class="ranking-item">
+        <span>4. Altico</span>
+        <span>87 pts</span>
+      </li>
+      <li class="ranking-item">
+        <span>5. Venecia</span>
+        <span>84 pts</span>
+      </li>
+    </ul>
+  </main>
+
+  <footer>&copy; 2025 EcoRuta</footer>
+</body>
+</html>
+

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+  // Aplica el modo oscuro automáticamente si está activado en localStorage
+  if (localStorage.getItem('modoOscuro') === 'true') {
+    document.documentElement.classList.add('dark-mode');
+  }
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Puntos Ecológicos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #mapa {
+      width: 100%;
+      height: 500px;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+  .leaflet-popup-content-wrapper {
+    background-color: var(--popup-bg, #ffffff);
+    color: var(--popup-text, #000000);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .leaflet-popup-content h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--popup-title, #2e7d32);
+  }
+
+  .leaflet-popup-content p {
+    margin: 0.5rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  /* Modo oscuro automático */
+  :root.dark-mode {
+    --popup-bg: #1e1e1e;
+    --popup-text: #f0f0f0;
+    --popup-title: #81c784;
+   }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EcoRuta Neiva</h1>
+    <nav>
+      <a href="loggin.html">Inicio</a>
+      <a href="ruta.html">Ruta</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="reportar.html">Reportar</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="notificaciones.html">Notificaciones</a>
+      <a href="puntos.html">Puntos</a>
+      <a href="configura.html">Configuración</a>
+    </nav>
+  </header>
+  <main style="padding: 2rem;">
+    <h2>Puntos Ecológicos</h2>
+    <p>Encuentra los puntos de reciclaje cercanos en Neiva.</p>
+    <div id="mapa"></div>
+  </main>
+<footer>&copy; 2025 EcoRuta</footer>
+
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    
+// Base clara
+const mapaClaro = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+});
+
+// Base oscura
+const mapaOscuro = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; CartoDB Dark Matter'
+});
+
+// Inicializa el mapa
+const mapa = L.map('mapa', {
+  center: [2.9361, -75.2891],
+  zoom: 14,
+  layers: [mapaClaro] // por defecto
+});
+
+// Cambiar base si está activado el modo oscuro
+if (localStorage.getItem('modoOscuro') === 'true') {
+  mapa.removeLayer(mapaClaro);
+  mapa.addLayer(mapaOscuro);
+}
+   const puntos = [
+  {
+    nombre: "Grupo empresarial recicla",
+    lat: 2.9108417084848996,
+    lon: -75.28234912869652,
+    descripcion: "Centro de reciclaje especializado en plásticos y cartón."
+  },
+  {
+    nombre: "Recuperar del Huila",
+    lat: 2.937583973446091,
+    lon: -75.29842464334429,
+    descripcion: "Recibimos papel, cartón y electrónicos."
+  },
+  {
+    nombre: "Recicladora y chatarreria el Paisa",
+    lat: 2.940078214722979,
+    lon: -75.29099284270029,
+    descripcion: "Compra de metales, cobre, aluminio y chatarra."
+  },
+  {
+    nombre: "Papeles los Comuneros Ecoservices",
+    lat: 2.9256001811764163,
+    lon: -75.29153651921656,
+    descripcion: "Empresa certificada para reciclaje de papel."
+  },
+  {
+    nombre: "METAL RECICLAR S.A.S",
+    lat: 2.916361914023431,
+    lon: -75.2838646295262,
+    descripcion: "Reciclaje de metales ferrosos y no ferrosos."
+  },
+  {
+    nombre: "ECAR EFICIENTES S.A.S ESP",
+    lat: 2.9107680475704347,
+    lon: -75.2735673501033,
+    descripcion: "Centro ambiental autorizado para residuos sólidos."
+  },
+  {
+    nombre: "Chatarreria Ibague",
+    lat: 2.932321461311831,
+    lon: -75.29290071522914,
+    descripcion: "Recolección de chatarra industrial y doméstica."
+  },
+  {
+    nombre: "ECOAMBIENTAL DE COLOMBIA S.A. E.S.P.",
+    lat: 2.9075962342348314,
+    lon: -75.28422284945837,
+    descripcion: "Manejo integral de residuos reciclables."
+  }
+];
+
+// Selecciona el ícono según el modo oscuro
+const iconoReciclaje = L.icon({
+  iconUrl: localStorage.getItem('modoOscuro') === 'true' ? 'images/icono.png' : 'images/icono2.png',
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+  popupAnchor: [0, -30]
+});
+
+
+    puntos.forEach(p => {
+  L.marker([p.lat, p.lon], { icon: iconoReciclaje }).addTo(mapa).bindPopup(`
+  <div class="popup-contenido">
+    <h3>${p.nombre}</h3>
+    <p>${p.descripcion}</p>
+  </div>
+`);
+});
+  </script>
+</body>
+</html>
+
+
+

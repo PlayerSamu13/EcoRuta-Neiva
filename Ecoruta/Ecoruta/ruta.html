@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+  // Aplica el modo oscuro automáticamente si está activado en localStorage
+  if (localStorage.getItem('modoOscuro') === 'true') {
+    document.documentElement.classList.add('dark-mode');
+  }
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Ruta</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    #mapa {
+      width: 100%;
+      height: 80vh;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EcoRuta Neiva</h1>
+  </header>
+
+  <nav>
+    <a href="loggin.html">Inicio</a>
+    <a href="calendario.html">Calendario</a>
+    <a href="reportar.html">Reportar</a>
+    <a href="notificaciones.html">Notificaciones</a>
+    <a href="puntos.html">Puntos</a>
+    <a href="ranking.html">Ranking</a>
+    <a href="configura.html">Configuración</a>
+  </nav>
+
+<div class="barrio-selector">
+  <label for="barrio">Seleccione su barrio:</label>
+  <select id="barrio">
+    <option value="">-- Seleccione --</option>
+    <option value="lasgranjas">Las Granjas</option>
+    <option value="altico">Altico</option>
+    <option value="canaima">Canaima</option>
+    <option value="bogotana">La Bogotana</option>
+    <option value="galindo">Galindo</option>
+    <option value="bambu">El Bambú</option>
+    <option value="panorama">Panorama</option>
+    <option value="camino">El Camino</option>
+    <option value="acacias">Las Acacias</option>
+    <option value="pastrana">Pastrana</option>
+    <option value="madalena">Santa Magdalena</option>
+    <option value="david">San David</option>
+    <option value="laureles">Los Laureles</option>
+    <option value="guaduales">Los Guaduales</option>
+    <option value="calamari">Calamarí</option>
+  </select>
+</div>
+
+<div id="mensaje-camion" class="mensaje-camion"></div>
+
+  <div id="mapa"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+   
+   // Base clara
+const mapaClaro = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+});
+
+// Base oscura
+const mapaOscuro = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; CartoDB Dark Matter'
+});
+
+// Inicializa el mapa
+const mapa = L.map('mapa', {
+  center: [2.9361, -75.2891],
+  zoom: 14,
+  layers: [mapaClaro] // por defecto
+});
+
+// Cambiar base si está activado el modo oscuro
+if (localStorage.getItem('modoOscuro') === 'true') {
+  mapa.removeLayer(mapaClaro);
+  mapa.addLayer(mapaOscuro);
+}
+
+
+    const iconoCamion = L.icon({
+      iconUrl: 'images/camion.png', 
+      iconSize: [32, 32]
+    });
+
+    const iconoCamionRojo = L.icon({
+      iconUrl: 'images/camion-rojo.png', 
+      iconSize: [32, 32]
+    });
+
+    const barrios = {
+      lasgranjas: { nombre: "Las Granjas", lat: 2.41317, lng: -75.52598 },
+      altico: { nombre: "Altico", lat: 2.92857, lng: -75.27987 },
+      calamari: { nombre: "Calamarí", lat: 2.97129, lng: -75.29614 },
+      canaima: { nombre: "Canaima", lat: 2.90294, lng: -75.27580 },
+      bogotana: { nombre: "La Bogotana", lat: 2.9440, lng: -75.2700 },
+      galindo: { nombre: "Galindo", lat: 2.93826, lng: -75.27661 },
+      bambu: { nombre: "El Bambú", lat: 2.9415, lng: -75.2660 },
+      panorama: { nombre: "Panorama", lat: 2.9350, lng: -75.2930 },
+      camino: { nombre: "El Camino", lat: 2.9332, lng: -75.2681 },
+      acacias: { nombre: "Las Acacias", lat: 2.9285, lng: -75.2710 },
+      pastrana: { nombre: "Pastrana", lat: 2.9325, lng: -75.2880 },
+      madalena: { nombre: "Santa Magdalena", lat: 2.9390, lng: -75.2760 },
+      david: { nombre: "San David", lat: 2.9452, lng: -75.2790 },
+      laureles: { nombre: "Los Laureles", lat: 2.9368, lng: -75.2810 },
+      guaduales: { nombre: "Los Guaduales", lat: 2.9305, lng: -75.2830 }    
+    };
+
+    let camiones = [];
+
+    function crearCamion(lat, lng) {
+      let marker = L.marker([lat, lng], { icon: iconoCamion }).addTo(mapa);
+      let camion = { marker, lat, lng };
+      camiones.push(camion);
+
+      setInterval(() => {
+        camion.lat += (Math.random() - 0.5) * 0.002;
+        camion.lng += (Math.random() - 0.5) * 0.002;
+        marker.setLatLng([camion.lat, camion.lng]);
+      }, 3000);
+    }
+
+    crearCamion(2.9372, -75.2650);
+    crearCamion(2.9372, -75.2891);
+    crearCamion(2.9120, -75.2870);
+    crearCamion(2.9750, -75.2925);
+    crearCamion(2.9500, -75.2500);
+    crearCamion(2.9410, -75.2450);
+    crearCamion(2.9330, -75.2564);
+    crearCamion(2.9478, -75.3000);
+    crearCamion(2.9200, -75.2700);
+    crearCamion(2.9330, -75.2798);
+
+    // Función para calcular distancia entre dos puntos
+    function distancia(lat1, lng1, lat2, lng2) {
+      const R = 6371; // Radio de la Tierra en km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLng = (lng2 - lng1) * Math.PI / 180;
+      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLng/2) * Math.sin(dLng/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c; // Distancia en km
+    }
+
+    function calcularTiempoLlegada(distanciaKm, velocidadKmh = 30) {
+      const tiempoHoras = distanciaKm / velocidadKmh;
+      return Math.round(tiempoHoras * 60); // Tiempo en minutos
+    }
+
+    let camionAnterior = null;
+
+    const mensajeDiv = document.getElementById("mensaje-camion");
+
+    document.getElementById("barrio").addEventListener("change", function () {
+      const valor = this.value;
+      if (!valor) {
+        mensajeDiv.textContent = "";
+        return;
+      }
+
+      const barrio = barrios[valor];
+      if (!barrio) {
+        mensajeDiv.textContent = "";
+        return;
+      }
+
+      let minDistancia = Infinity;
+      let camionMasCercano = null;
+
+      camiones.forEach(camion => {
+        const dist = distancia(barrio.lat, barrio.lng, camion.lat, camion.lng);
+        if (dist < minDistancia) {
+          minDistancia = dist;
+          camionMasCercano = camion;
+        }
+      });
+
+      if (camionAnterior && camionAnterior.marker) {
+        camionAnterior.marker.setIcon(iconoCamion);
+      }
+
+      if (camionMasCercano) {
+        camionMasCercano.marker.setIcon(iconoCamionRojo);
+        camionAnterior = camionMasCercano;
+
+        mapa.setView([camionMasCercano.lat, camionMasCercano.lng], 15);
+
+        const tiempoMinutos = calcularTiempoLlegada(minDistancia);
+        mensajeDiv.textContent = `El camión más cercano está a ${minDistancia.toFixed(2)} km y llegará en aproximadamente ${tiempoMinutos} minuto${tiempoMinutos !== 1 ? 's' : ''}.`;
+      } else {
+        mensajeDiv.textContent = "";
+      }
+    });
+  </script>    
+
+</body>
+</html>

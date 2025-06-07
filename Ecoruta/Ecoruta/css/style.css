@@ -1,0 +1,355 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+header {
+  background-color: #2e7d32;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  background-color: #388e3c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background-color: #66bb6a;
+}
+
+/* ========== Tema Oscuro Mejorado ========== */
+.dark-mode body {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode header {
+  background-color: #2e7d32; /* verde original */
+  color: white;
+}
+
+.dark-mode nav {
+  background-color: #388e3c; /* verde original */
+}
+
+.dark-mode nav a {
+  background-color: #4caf50;
+  color: white;
+}
+
+.dark-mode nav a:hover {
+  background-color: #66bb6a;
+}
+
+.dark-mode footer {
+  background-color: #1a1a1a;
+  color: #ccc;
+}
+
+.barrio-selector {
+  background-color: #e8f5e9;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.barrio-selector label {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #2e7d32;
+  margin-right: 0.5rem;
+}
+
+.barrio-selector select {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 2px solid #4caf50;
+  font-size: 1rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Mensaje Camión */
+.mensaje-camion {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  z-index: 1000;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* === Tema Oscuro === */
+.dark-mode .barrio-selector {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .barrio-selector label {
+  color: #a5d6a7;
+}
+
+.dark-mode .barrio-selector select {
+  background-color: #2a2a2a;
+  color: #eee;
+  border-color: #66bb6a;
+}
+
+.dark-mode .mensaje-camion {
+  background-color: #2b2b2b;
+  color: #eee;
+}
+
+.ranking-container {
+  max-width: 700px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.ranking-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-item {
+  background-color: #f1f8e9;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-left: 6px solid #2e7d32;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Colores de los primeros tres puestos */
+.ranking-item.oro {
+  background-color: #dcedc8;
+  border-left-color: gold;
+}
+.ranking-item.plata {
+  background-color: #e6ee9c;
+  border-left-color: silver;
+}
+.ranking-item.bronce {
+  background-color: #fff59d;
+  border-left-color: #cd7f32;
+}
+
+/* === Tema Oscuro === */
+.dark-mode .ranking-item {
+  background-color: #2a2a2a;
+  color: #eee;
+  border-left-color: #66bb6a;
+}
+
+.dark-mode .ranking-item.oro {
+  background-color: #444400;
+  border-left-color: gold;
+}
+
+.dark-mode .ranking-item.plata {
+  background-color: #555533;
+  border-left-color: silver;
+}
+
+.dark-mode .ranking-item.bronce {
+  background-color: #665033;
+  border-left-color: #cd7f32;
+}
+
+.notificaciones-container {
+  padding: 2rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.notificaciones-lista {
+  list-style: none;
+  padding: 0;
+}
+
+.notificacion {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 5px solid;
+  border-radius: 4px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.notificacion small {
+  display: block;
+  margin-top: 0.5rem;
+  color: gray;
+}
+
+/* Colores en modo claro */
+.notificacion.verde {
+  background: #e8f5e9;
+  border-color: #2e7d32;
+}
+
+.notificacion.naranja {
+  background: #fff3e0;
+  border-color: #ff9800;
+}
+
+.notificacion.azul {
+  background: #e3f2fd;
+  border-color: #2196f3;
+}
+
+/* Modo oscuro */
+.dark-mode .notificacion.verde {
+  background: #1b2a1d;
+  border-color: #66bb6a;
+  color: #c8e6c9;
+}
+
+.dark-mode .notificacion.naranja {
+  background: #2b241b;
+  border-color: #ffa726;
+  color: #ffe0b2;
+}
+
+.dark-mode .notificacion.azul {
+  background: #1a2633;
+  border-color: #64b5f6;
+  color: #bbdefb;
+}
+
+.dark-mode .notificacion small {
+  color: #999;
+}
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #f0f0f0;
+    }
+
+ .dark-mode footer {
+      background-color: #1e1e1e;
+    }
+header {
+  background-color: #2e7d32;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+nav {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+nav a {
+  color: #c8e6c9;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+/* Dark mode nav */
+.dark-mode nav a {
+  color: #a5d6a7;
+}
+
+
+@media (max-width: 400px) {
+  .calendar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* ---------- Responsive Calendar ---------- */
+@media (max-width: 900px) {
+  main {
+    padding: 1rem;
+  }
+
+  .calendar {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .calendar .day, .calendar .day-name {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .barrio-selector select {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .calendar {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .calendar .day, .calendar .day-name {
+    font-size: 0.8rem;
+    padding: 6px;
+    min-height: 60px;
+  }
+}
+
+@media (max-width: 400px) {
+  .calendar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .calendar .day, .calendar .day-name {
+    font-size: 0.75rem;
+    padding: 5px;
+    min-height: 50px;
+  }
+
+  .barrio-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .barrio-selector label {
+    margin-bottom: 0.5rem;
+  }
+}

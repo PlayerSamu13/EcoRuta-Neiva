@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Configuración</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .config-container {
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .config-option {
+      background: #f5f5f5;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      border-left: 4px solid #2e7d32;
+    }
+
+    .config-option h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.2rem;
+    }
+
+    .config-option p {
+      margin: 0;
+      color: #666;
+    }
+
+    .btn-cerrar {
+      background-color: #d32f2f;
+      color: white;
+      padding: 0.75rem;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 2rem;
+    }
+
+    .btn-cerrar:hover {
+      background-color: #b71c1c;
+    }
+
+    /* ==== MODO OSCURO ESPECÍFICO PARA CONFIGURA ==== */
+    .dark-mode .config-container {
+      background-color: #1e1e1e;
+      color: #eee;
+      padding: 2rem;
+    }
+
+    .dark-mode .config-option {
+      background-color: #2a2a2a;
+      border-left-color: #66bb6a;
+      color: #ddd;
+    }
+
+    .dark-mode .config-option h3 {
+      color: #a5d6a7;
+    }
+
+    .dark-mode .config-option p {
+      color: #ccc;
+    }
+
+    .dark-mode label[for="modoOscuro"] {
+      color: #a5d6a7;
+      font-weight: 600;
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .dark-mode .btn-cerrar {
+      background-color: #b71c1c;
+      color: #fff;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .dark-mode .btn-cerrar:hover {
+      background-color: #d32f2f;
+      cursor: pointer;
+    }
+
+    .dark-mode footer {
+      background-color: #1a1a1a;
+      color: #ccc;
+    }
+.config-option select {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: white;
+  color: #333;
+}
+
+.dark-mode .config-option select {
+  background-color: #333;
+  color: #eee;
+  border: 1px solid #666;
+}
+
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.select-wrapper select {
+  appearance: none;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 3rem;
+  font-size: 1rem;
+  font-family: "Segoe UI", sans-serif;
+  color: #2e2e2e;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.select-wrapper::after {
+  content: "▼";
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+
+.select-wrapper select:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+  outline: none;
+}
+
+/* Estilo para modo oscuro */
+.dark-mode .select-wrapper select {
+  background-color: #2a2a2a;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+.dark-mode .select-wrapper::after {
+  color: #ccc;
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EcoRuta Neiva</h1>
+    <nav>
+      <a href="ruta.html">Ruta</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="reportar.html">Reportar</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="notificaciones.html">Notificaciones</a>
+      <a href="puntos.html">Puntos</a>
+    </nav>
+  </header>
+  <main class="config-container">
+    <h2>Configuración</h2>
+
+    <div class="config-option">
+      <h3>Notificaciones</h3>
+      <p>Activar o desactivar alertas sobre rutas, reportes y noticias.</p>
+    </div>
+
+    <div class="config-option">
+      <h3>Idioma</h3>
+      <p>Seleccionar idioma preferido de la aplicación.</p>
+    </div>
+
+    <div class="config-option">
+      <h3>Privacidad</h3>
+      <p>Controlar la visibilidad de tus reportes y puntuaciones.</p>
+    </div>
+
+    <div class="config-option">
+      <h3>Cuenta</h3>
+      <p>Actualizar correo, contraseña y datos de sesión.</p>
+    </div>
+
+   <div class="config-option">
+  <h3>Tema</h3>
+  <p>Selecciona el tema visual de la aplicación.</p>
+  <div class="select-wrapper">
+    <select id="selectorTema">
+      <option value="claro">Claro</option>
+      <option value="oscuro">Oscuro</option>
+    </select>
+  </div>
+</div>
+
+    </main>
+  <script>
+  const selectorTema = document.getElementById('selectorTema');
+
+  // Aplica el tema al cargar
+  const temaGuardado = localStorage.getItem('modoOscuro');
+  if (temaGuardado === 'true') {
+    document.documentElement.classList.add('dark-mode');
+    selectorTema.value = 'oscuro';
+  } else {
+    selectorTema.value = 'claro';
+  }
+
+  // Cambiar tema al seleccionar
+  selectorTema.addEventListener('change', () => {
+    const esOscuro = selectorTema.value === 'oscuro';
+    document.documentElement.classList.toggle('dark-mode', esOscuro);
+    localStorage.setItem('modoOscuro', esOscuro);
+  });
+</script>
+
+  <footer>&copy; 2025 EcoRuta</footer>
+</body>
+</html>

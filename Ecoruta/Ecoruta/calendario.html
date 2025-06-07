@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Calendario</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .barrio-selector {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      text-align: center;
+    }
+
+    .day-name {
+      font-weight: bold;
+      background-color: #e0e0e0;
+      padding: 10px;
+    }
+
+    .day {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      min-height: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background 0.3s ease;
+    }
+
+    .past {
+      background-color: #eeeeee;
+      color: #999;
+    }
+
+    .normal {
+      background-color: #e8f5e9;
+      border-left: 5px solid #2e7d32;
+    }
+
+    .retraso {
+      background-color: #fff3e0;
+      border-left: 5px solid #fb8c00;
+    }
+
+    .cancelado {
+      background-color: #ffebee;
+      border-left: 5px solid #c62828;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: #f0f0f0;
+    }
+
+    :root {
+      --background-color: #fff;
+      --text-color: #000;
+    }
+
+    .dark-mode {
+      --background-color: #121212;
+      --text-color: #e0e0e0;
+    }
+
+    .dark-mode .day-name {
+      background-color: #333;
+    }
+
+    .dark-mode .day {
+      border-color: #444;
+    }
+
+    .dark-mode footer {
+      background-color: #1e1e1e;
+    }
+
+.dark-mode .past {
+  background-color: #2e2e2e;
+  color: #888;
+}
+
+
+.dark-mode .normal {
+  background-color: #2e7d32;
+  color: white;
+  border-left-color: #2e7d32;
+}
+
+
+.dark-mode .retraso {
+  background-color: #f57c00;
+  color: white;
+  border-left-color: #f57c00;
+}
+
+
+.dark-mode .cancelado {
+  background-color: #c62828;
+  color: white;
+  border-left-color: #c62828;
+}
+
+
+.dark-mode select {
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+
+.dark-mode .day {
+  border: 1px solid #444;
+}
+
+
+  </style>
+  <script>
+    if (localStorage.getItem('modoOscuro') === 'true') {
+      document.documentElement.classList.add('dark-mode');
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const calendar = document.querySelector(".calendar");
+      const barrioSelect = document.getElementById("barrio");
+
+      const dias = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+      dias.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "day-name";
+        div.textContent = d;
+        calendar.appendChild(div);
+      });
+
+      const fecha = new Date();
+      const año = fecha.getFullYear();
+      const mes = fecha.getMonth(); // 0 = enero
+      const primerDia = new Date(año, mes, 1).getDay();
+      const diasMes = new Date(año, mes + 1, 0).getDate();
+
+      const estadoDias = {
+        "Calamarí": {3: "normal", 5: "retraso", 7: "cancelado", 10: "normal", 12: "normal", 14: "retraso", 17: "normal", 19: "normal", 21: "normal", 24: "normal", 26: "cancelado", 28: "normal"},
+        "Centro": {2: "normal", 4: "normal", 6: "normal", 9: "normal", 11: "normal", 13: "retraso", 16: "normal", 18: "cancelado", 20: "normal", 23: "normal", 25: "cancelado", 27: "normal", 30: "normal"},
+        "Venecia": {3: "restraso", 5: "normal", 7: "cancelado", 10: "normal", 12: "normal", 14: "retraso", 17: "normal", 19: "normal", 21: "retraso", 24: "retraso", 26: "cancelado", 28: "normal"},
+        "Altico": {2: "normal", 4: "cancelado", 6: "retraso", 9: "normal", 11: "cancelado", 13: "retraso", 16: "normal", 18: "cancelado", 20: "normal", 23: "normal", 25: "cancelado", 27: "cancelado", 30: "normal"},
+      };
+
+      function renderCalendar(barrio) {
+        document.querySelectorAll(".day").forEach(e => e.remove());
+
+        const hoy = new Date();
+
+        for (let i = 0; i < primerDia; i++) {
+          const empty = document.createElement("div");
+          empty.className = "day";
+          calendar.appendChild(empty);
+        }
+
+        for (let d = 1; d <= diasMes; d++) {
+          const dia = document.createElement("div");
+          dia.className = "day";
+
+          const fechaActual = new Date(año, mes, d);
+          const esPasado = fechaActual < new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+
+          const estado = estadoDias[barrio][d] || "";
+          if (esPasado) dia.classList.add("past");
+          else if (estado) dia.classList.add(estado);
+
+          dia.innerHTML = `<strong>${d}</strong><br><small>${estado}</small>`;
+          calendar.appendChild(dia);
+        }
+      }
+
+      barrioSelect.addEventListener("change", (e) => {
+        renderCalendar(e.target.value);
+      });
+
+      renderCalendar(barrioSelect.value);
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>EcoRuta Neiva</h1>
+    <nav>
+      <a href="ruta.html">Ruta</a>
+      <a href="reportar.html">Reportar</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="notificaciones.html">Notificaciones</a>
+      <a href="puntos.html">Puntos</a>
+      <a href="configura.html">Configuración</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Calendario de Recolección</h2>
+    <div class="barrio-selector">
+      <label for="barrio">Barrio:&nbsp;</label>
+      <select id="barrio"> 
+        <option value="Calamarí">Calamarí</option>
+        <option value="Centro">Centro</option>
+        <option value="Venecia">Venecia</option>
+        <option value="Altico">Altico</option>
+      </select>
+    </div>
+    <div class="calendar"></div>
+  </main>
+
+  <footer>&copy; 2025 EcoRuta</footer>
+</body>
+</html>

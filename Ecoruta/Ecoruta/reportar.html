@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoRuta Neiva - Reportar</title>
+  <link rel="stylesheet" href="css/style2.css" />
+  <script>
+  function aplicarModoOscuro() {
+    if (localStorage.getItem('modoOscuro') === 'true') {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  }
+
+  aplicarModoOscuro();
+
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'modoOscuro') {
+      aplicarModoOscuro();
+    }
+  });
+</script>
+
+</head>
+<body>
+<script>
+  (function() {
+    if (localStorage.getItem('modoOscuro') === 'true') {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+  })();
+</script>
+
+  <header>
+    <h1>EcoRuta Neiva</h1>
+    <nav>
+      <a href="ruta.html">Ruta</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="notificaciones.html">Notificaciones</a>
+      <a href="puntos.html">Puntos</a>
+      <a href="configura.html">Configuración</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Reportar Irregularidad</h2>
+    <p>Indica el tipo de incidente que deseas reportar.</p>
+
+    <form id="formulario" onsubmit="return validarFormulario(event)">
+      <label for="tipo">Tipo de reporte:</label>
+      <select id="tipo" name="tipo" required>
+        <option value="">Selecciona una opción</option>
+        <option>Acumulación de basura</option>
+        <option>Camión no pasó</option>
+        <option>Contenedor dañado</option>
+        <option>Otro</option>
+      </select>
+
+      <label for="descripcion">Descripción:</label>
+      <textarea id="descripcion" name="descripcion" rows="4" required placeholder="Describe con detalle el problema..."></textarea>
+
+      <label for="direccion">Dirección exacta:</label>
+      <input type="text" id="direccion" name="direccion" required placeholder="Ej: Calle 10 #12-34, Barrio Las Palmas" />
+
+      <label>Subir imagen (opcional):</label>
+      <div class="file-upload">
+        <label class="file-upload-label" for="imagen">Seleccionar imagen</label>
+        <input type="file" id="imagen" accept="image/*" onchange="previewImage(event)" />
+      </div>
+
+      <img id="preview" alt="Vista previa de la imagen" />
+
+      <button type="submit" id="botonEnviar">Enviar reporte</button>
+    </form>
+
+    <div id="mensajeExito">
+      ✅ ¡Reporte enviado exitosamente!
+      <button id="cerrarMensaje" onclick="cerrarMensaje()">×</button>
+    </div>
+
+    <div id="checkConfirmacion" class="check-float" style="display:none;">✔</div>
+  </main>
+
+  <footer>&copy; 2025 EcoRuta</footer>
+
+  <script>
+    function previewImage(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById('preview');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = '';
+        preview.style.display = 'none';
+      }
+    }
+
+    function validarFormulario(event) {
+      event.preventDefault();
+      const tipo = document.getElementById("tipo").value;
+      const descripcion = document.getElementById("descripcion").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+
+      if (!tipo || !descripcion || !direccion) {
+        alert("Por favor completa todos los campos obligatorios.");
+        return false;
+      }
+
+      const boton = document.getElementById("botonEnviar");
+      boton.disabled = true;
+      boton.textContent = "Enviando...";
+
+      setTimeout(() => {
+        boton.disabled = false;
+        boton.textContent = "Enviar reporte";
+        document.getElementById("mensajeExito").style.display = "block";
+        document.getElementById("formulario").reset();
+        document.getElementById("preview").style.display = "none";
+
+        const check = document.getElementById("checkConfirmacion");
+        check.style.display = "flex";
+        setTimeout(() => {
+          check.style.display = "none";
+        }, 2000);
+      }, 1500);
+
+      return true;
+    }
+
+    function cerrarMensaje() {
+      document.getElementById("mensajeExito").style.display = "none";
+    }
+  </script>
+</body>
+</html>
+
